@@ -307,14 +307,15 @@
     .panel{grid-template-columns:1fr}
     .sozlama-grid{grid-template-columns:1fr}
     .bosh-band{padding:20px 0 30px}
+    .bosh-ich{flex-wrap:nowrap}                 /* tugma hech qachon pastga tushmasin */
     .doira-belgi{width:32px;height:32px;border-width:5px}
-    .logo{gap:10px}
+    .logo{gap:10px;flex:1;min-width:0}          /* matn mavjud joyga moslashib siqiladi */
     .logo h1{font-size:1.35rem}
-    .logo p{font-size:.72rem;max-width:180px}
-    .sozlama-tugma{font-size:.8rem;padding:8px 13px}
+    .logo p{font-size:.72rem;max-width:none}
+    .sozlama-orama{gap:6px;flex:none}
+    .sozlama-tugma{font-size:.8rem;padding:8px 13px;white-space:nowrap}
     .tugma-toliq{display:none}
     .tugma-qisqa{display:inline}
-    .sozlama-orama{gap:6px}
     .strelka{width:126px;height:58px;margin-right:40px}
     .kosa-sahna{height:230px}
     .kosa-rasm{width:min(290px,100%)}
