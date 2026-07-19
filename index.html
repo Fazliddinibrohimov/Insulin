@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doza — insulin bolus kalkulyatori</title>
+<meta name="description" content="Doza — o'zbek milliy taomlari asosidagi bepul insulin doza kalkulyatori. Ovqatingizga qarab insulin dozasini oson va xavfsiz hisoblang, qand kundaligini yuriting.">
+<meta name="google-site-verification" content="pJKaNcO6qWsb4JXId3VLvuLcQ7Jkz8s7QZ56n_Zaadg" />
+<link rel="canonical" href="https://insulin.uz/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Doza — bepul insulin doza kalkulyatori">
+<meta property="og:description" content="O'zbek milliy taomlari asosidagi bepul insulin doza kalkulyatori. Ovqatingizga qarab insulin dozasini oson va xavfsiz hisoblang.">
+<meta property="og:image" content="https://insulin.uz/assets/img/kosa_osh.webp">
+<meta property="og:url" content="https://insulin.uz/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Doza",
+  "alternateName": "insulin.uz",
+  "url": "https://insulin.uz",
+  "description": "Ovqatga qarab insulin dozasini oson va xavfsiz hisoblash hamda qon qandi miqdorini nazorat qilish uchun mo'ljallangan bepul raqamli platforma.",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "UZS" },
+  "author": { "@type": "Person", "name": "Fazliddin Ibrohimov" },
+  "inLanguage": ["uz", "ru", "en"]
+}
+</script>
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<!-- LCP tuzatish: fon rasmi CSS background'da — brauzer uni kech topmasligi uchun oldindan yuklaymiz -->
+<link rel="preload" as="image" href="assets/img/fon.webp" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.min.css">
+</head>
+<body>
+
+<div class="yuklanish-ekrani" id="yuklanishEkrani">
+  <img src="assets/img/maskot/sayt_yuklanish.webp" alt="" class="yuklanish-maskot">
+  <p class="yuklanish-matn">Yuklanmoqda <b>Doza</b><span class="yuklanish-nuqtalar"><span>.</span><span>.</span><span>.</span></span></p>
+</div>
+<script>window.__yuklanishBoshi = Date.now();</script>
+
+<div class="yopishqoq">
+  <div class="yop-ich">
+    <div class="yop-logo"><span class="doira-mini" aria-hidden="true"></span>Doza</div>
+    <div class="yop-asboblar">
+      <button class="yop-dumaloq tema-tugma" id="temaTugma" aria-label="Tungi rejim">
+        <svg class="tema-quyosh" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4.4" fill="#D9A43C"/><g stroke="#D9A43C" stroke-width="1.8" stroke-linecap="round"><line x1="10" y1="1.3" x2="10" y2="3.5"/><line x1="10" y1="16.5" x2="10" y2="18.7"/><line x1="1.3" y1="10" x2="3.5" y2="10"/><line x1="16.5" y1="10" x2="18.7" y2="10"/><line x1="3.9" y1="3.9" x2="5.5" y2="5.5"/><line x1="14.5" y1="14.5" x2="16.1" y2="16.1"/><line x1="3.9" y1="16.1" x2="5.5" y2="14.5"/><line x1="14.5" y1="5.5" x2="16.1" y2="3.9"/></g></svg>
+        <svg class="tema-oy" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.8,12.4 A7.4,7.4 0 1 1 7.6,3.2 A6,6 0 0 0 16.8,12.4 Z" fill="#EFD98E"/></svg>
+      </button>
+      <div class="til-orama">
+        <button class="yop-dumaloq til-tugma" id="tilTugma" aria-expanded="false" aria-haspopup="true">
+          <span class="til-bayroq" id="tilBayroq"></span><span id="tilKod">UZ</span>
+        </button>
+        <div class="til-menyu" id="tilMenyu" role="menu">
+          <button data-til="uz" role="menuitem"><span class="til-bayroq" data-bayroq="uz"></span> O'zbekcha <span class="belgicha">✓</span></button>
+          <button data-til="ru" role="menuitem"><span class="til-bayroq" data-bayroq="ru"></span> Русский <span class="belgicha">✓</span></button>
+          <button data-til="en" role="menuitem"><span class="til-bayroq" data-bayroq="en"></span> English <span class="belgicha">✓</span></button>
+        </div>
+      </div>
+      <button class="yop-royxat-tugma" id="yopRoyxatTugma" hidden><span class="royxat-toliq" data-i18n="nav_royxat_t">Ro'yxatdan o'tish</span><span class="royxat-qisqa" data-i18n="nav_royxat_qisqa">Kirish</span></button>
+      <button class="yop-dumaloq yop-sozlama diqqat" id="sozlamaOchish" aria-expanded="false" aria-controls="sozlamalar">⚙ <span class="soz-matn" data-i18n="soz_tugma">Sozlamalar</span></button>
+    </div>
+  </div>
+
+  <!-- Sozlamalar — sticky panelning o'zidan pastga ochiladigan tortma, qaysi bo'limda bo'lishidan qat'iy nazar mavjud -->
+  <section class="sozlamalar" id="sozlamalar" aria-labelledby="sozlama-sarlavha">
+    <div class="sozlamalar-ich">
+      <h2 id="sozlama-sarlavha" data-i18n="soz_h">Shaxsiy sozlamalar</h2>
+      <p class="eslatma" data-i18n="soz_esl">Bu qiymatlarni faqat shifokoringiz (endokrinolog) belgilashi kerak. Taxminiy qiymat kiritmang.</p>
+
+      <details class="malumot">
+        <summary data-i18n="soz_sum">📖 ICR va ISF qanday aniqlanadi?</summary>
+        <div class="malumot-ich" data-i18n-html="soz_info">
+          <p>Ikkala ko'rsatkich ham odatda <strong>TDD</strong> — bir kunda olinadigan jami insulin miqdori (bazal + bolus yig'indisi) asosida hisoblanadi.</p>
+          <p><strong>ICR — «500 qoidasi»:</strong> ICR = 500 ÷ TDD. Masalan, TDD 50 birlik bo'lsa: 500 ÷ 50 = 10, ya'ni 1 birlik insulin taxminan 10 g uglevodni qoplaydi.</p>
+          <p><strong>ISF — «100 qoidasi» (mmol/L uchun):</strong> ISF = 100 ÷ TDD. O'sha misolda: 100 ÷ 50 = 2, ya'ni 1 birlik insulin qandni taxminan 2 mmol/L ga tushiradi.</p>
+          <p><strong>Muhim:</strong> bu formulalar faqat boshlang'ich taxmin beradi. Aniq qiymatlar shifokor nazoratida amaliy tekshiruv bilan topiladi — ovqatdan oldin va 2 soat keyin (ICR uchun) yoki korreksiyadan 3–4 soat keyin (ISF uchun) qand o'lchab solishtiriladi. Qiymatlar kun vaqti, jismoniy faollik va yoshga qarab o'zgarishi mumkin, shuning uchun ularni endokrinologingiz bilan birga aniqlang.</p>
+        </div>
+      </details>
+
+      <div class="sozlama-grid">
+        <div class="maydon">
+          <label for="icr" data-i18n="icr_l">ICR — insulin-uglevod nisbati</label>
+          <div class="kirish-qator">
+            <input type="number" id="icr" inputmode="decimal" min="1" step="0.5" value="10">
+            <span class="birlik" data-i18n="icr_b">g / birlik</span>
+          </div>
+          <p class="izoh" data-i18n="icr_i">1 birlik insulin necha gramm uglevodni qoplaydi</p>
+        </div>
+
+        <div class="maydon">
+          <label for="isf" data-i18n="isf_l">ISF — sezuvchanlik faktori</label>
+          <div class="kirish-qator">
+            <input type="number" id="isf" inputmode="decimal" min="0.1" step="0.1" value="3">
+            <span class="birlik">mmol/L</span>
+          </div>
+          <p class="izoh" data-i18n="isf_i">1 birlik insulin qandni necha mmol/L ga tushiradi</p>
+        </div>
+
+        <div class="maydon">
+          <label for="maqsad" data-i18n="maq_l">Maqsadli qand darajasi</label>
+          <div class="kirish-qator">
+            <input type="number" id="maqsad" inputmode="decimal" min="4" step="0.1" value="6.0">
+            <span class="birlik">mmol/L</span>
+          </div>
+          <p class="izoh" data-i18n="maq_i">Shifokoringiz belgilagan maqsadli qiymat</p>
+        </div>
+      </div>
+
+      <button class="saqla" id="saqlaTugma" data-i18n="saqla_t">Sozlamalarni saqlash</button>
+      <span class="saqlandi" id="saqlandiXabar" data-i18n="saqlandi_t">✓ Saqlandi</span>
+    </div>
+  </section>
+</div>
+
+<div class="bosh-band">
+  <div class="orama bosh-ich">
+    <div class="logo">
+      <span class="doira-belgi" aria-hidden="true"></span>
+      <div>
+        <h1>Doza</h1>
+        <p data-i18n="hero_p">Ovqatingizga qarab insulin dozasini oson va xavfsiz hisoblang</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="orama">
+
+<div id="viewBosh">
+
+  <section class="bosh-panel">
+    <div class="bp-karta bp-oxirgi stagger-blok" id="bpOxirgi"></div>
+    <div class="bp-karta bp-maskot stagger-blok" id="bpMaskotKarta"></div>
+    <div class="bp-tez stagger-blok">
+      <button class="bp-tez-t1" id="bpKundalikTugma">📊 <span data-i18n="bp_kund_t">Kundalik</span></button>
+      <button class="bp-tez-t2" id="bpTaomTugma">🍛 <span data-i18n="bp_taom_t">Taomlar</span></button>
+    </div>
+  </section>
+
+  <div class="disclaimer stagger-blok" role="note" data-i18n-html="disc">
+    <strong>Muhim:</strong> bu vosita tibbiy maslahat o'rnini bosmaydi. ICR va ISF qiymatlaringizni faqat
+    endokrinolog belgilaydi. Har qanday hisoblangan dozani shifokoringiz tavsiyasi bilan solishtiring.
+  </div>
+
+  <main class="panel">
+
+    <!-- Kiritish -->
+    <section class="karta stagger-blok" aria-labelledby="kiritish-sarlavha">
+      <h2 id="kiritish-sarlavha" data-i18n="kir_h">Ma'lumotlarni kiriting</h2>
+
+      <div class="maydon">
+        <label for="uglevod" data-i18n="ugl_l">🍚 Ovqatdagi uglevodlar</label>
+        <div class="kirish-qator">
+          <input type="number" id="uglevod" inputmode="decimal" min="0" step="1" placeholder="0">
+          <span class="birlik" data-i18n="ugl_b">gramm</span>
+        </div>
+        <p class="izoh" data-i18n="ugl_i">Qo'lda kiriting yoki pastdagi 🍛 taomlar bazasidan tanlang</p>
+      </div>
+
+      <div class="maydon">
+        <label for="hozirgiQand" data-i18n="qand_l">🩸 Hozirgi qand darajasi</label>
+        <div class="kirish-qator">
+          <input type="number" id="hozirgiQand" inputmode="decimal" min="0" step="0.1" placeholder="0.0">
+          <span class="birlik">mmol/L</span>
+        </div>
+        <p class="izoh" data-i18n="qand_i">Glyukometr ko'rsatgan hozirgi qiymat</p>
+      </div>
+
+      <button class="hisobla" id="hisoblaTugma" data-i18n="his_t">Dozani hisoblash</button>
+    </section>
+
+    <!-- Natija: kosa sahnasi -->
+    <section class="karta natija-karta stagger-blok" aria-labelledby="natija-sarlavha" aria-live="polite">
+      <h2 id="natija-sarlavha" data-i18n="nat_h">Tavsiya etilgan doza</h2>
+
+      <div class="kosa-sahna" id="kosaSahna">
+        <div class="bugʻ" aria-hidden="true"><span></span><span></span><span></span></div>
+        <img class="kosa-rasm bosh-rasm" src="assets/img/kosa_bosh.webp" alt="Bo'sh kosa">
+        <img class="kosa-rasm toliq-rasm" src="assets/img/kosa_osh.webp" alt="Osh solingan kosa">
+        <div class="doza-yorliq" id="dozaYorliq"></div>
+      </div>
+
+      <div class="taqsimot" id="taqsimot" hidden>
+        <div class="qator"><span data-i18n="ovq_l">Ovqat uchun</span><span id="ovqatDoza">—</span></div>
+        <div class="qator"><span data-i18n="kor_l">Korreksiya</span><span id="korreksiyaDoza">—</span></div>
+        <div class="qator jami"><span data-i18n="jami_l">Jami (aniq qiymat)</span><span id="aniqJami">—</span></div>
+      </div>
+
+      <div class="xabar oddiy" id="xabar" data-i18n="bosh_xabar">Uglevod miqdori va hozirgi qand darajangizni kiriting, so'ng «Dozani hisoblash» tugmasini bosing.</div>
+      <button class="kd-yoz-tugma" id="kundalikYozTugma" hidden data-i18n="kund_yoz_t">📊 Bu qiymatni kundalikka yozish</button>
+    </section>
+
+  </main>
+
+  <section class="taomlar stagger-blok">
+    <button class="taom-ochish" id="taomOchish">
+      <span class="to-rasm" aria-hidden="true"></span>
+      <span class="to-matn"><span data-i18n="to_t">🍛 Taomlar bazasini ochish</span>
+        <small data-i18n="to_s">Taomlarni tanlang — uglevod o'zi hisoblanadi</small>
+      </span>
+    </button>
+    <p class="taom-xulosa" id="taomXulosa" hidden></p>
+  </section>
+
+  <div class="stagger-blok" style="text-align:center;margin-top:4px">
+    <span class="shifokor-tasdiq">✔️ Dr. Alisher Xidirov tahlilidan o'tgan</span>
+  </div>
+
+</div><!-- /viewBosh -->
+
+<div id="viewKundalik" hidden>
+
+  <section class="karta kd-karta">
+    <div class="kd-ehba-qator">
+      <div>
+        <div class="kd-eyebrow" data-i18n="kd_ehba_eyebrow">Taxminiy HbA1c</div>
+        <div class="kd-ehba-qiymat" id="kdEhba">—</div>
+      </div>
+      <span class="kd-chip" id="kdEhbaChip" data-i18n="kd_ehba_chip">so'nggi 30 kun</span>
+    </div>
+    <p class="kd-izoh" id="kdEhbaIzoh"></p>
+  </section>
+
+  <section class="karta kd-karta">
+    <div class="kd-kunlik-sarlavha">
+      <button class="kd-kun-nav" id="kdKunOrqaga" aria-label="Oldingi kun">‹</button>
+      <div class="kd-kun-sana" id="kdKunSana">Bugun</div>
+      <button class="kd-kun-nav" id="kdKunOldinga" aria-label="Keyingi kun">›</button>
+    </div>
+    <div id="kdKunlikGrafikOrama"></div>
+  </section>
+
+  <section class="karta kd-karta">
+    <h2 class="kd-h2" data-i18n="kd_grafik_h">7 kunlik grafik</h2>
+    <div id="kdGrafikOrama"></div>
+  </section>
+
+  <section class="karta kd-karta">
+    <h2 class="kd-h2" data-i18n="kd_yozuv_h">Yangi yozuv qo'shish</h2>
+    <div class="kd-forma">
+      <div class="maydon">
+        <label for="kdQand" data-i18n="qand_l">🩸 Hozirgi qand darajasi</label>
+        <div class="kirish-qator">
+          <input type="number" id="kdQand" inputmode="decimal" min="0" step="0.1" placeholder="0.0">
+          <span class="birlik">mmol/L</span>
+        </div>
+      </div>
+      <div class="maydon">
+        <label for="kdTuri" data-i18n="kd_turi_l">Vaqti</label>
+        <select id="kdTuri" class="kd-select"></select>
+      </div>
+      <button class="hisobla" id="kdQoshish" data-i18n="kd_qoshish_t">Kundalikka qo'shish</button>
+    </div>
+  </section>
+
+  <section class="karta kd-karta">
+    <h2 class="kd-h2" data-i18n="kd_royxat_h">So'nggi yozuvlar</h2>
+    <div id="kdRoyxat"></div>
+  </section>
+
+</div><!-- /viewKundalik -->
+
+<div id="viewBilim" hidden>
+  <div class="bilim-orama">
+    <div class="bilim-bosh">
+      <h2 data-i18n="bl_h">Bilim bo'limi</h2>
+      <p data-i18n="bl_p">Diabet haqida ishonchli, qisqa va amaliy ma'lumotlar</p>
+    </div>
+    <div class="bilim-royxat" id="bilimRoyxat"></div>
+  </div>
+</div><!-- /viewBilim -->
+
+<!-- Bilim maqola o'quvchisi -->
+<div class="modal-fon" id="bilimModalFon" role="dialog" aria-modal="true" aria-labelledby="bilim-o-sarlavha">
+  <div class="modal bilim-modal">
+    <div class="modal-bosh" style="position:absolute;right:6px;top:6px;z-index:2;background:none">
+      <button class="modal-yop" id="bilimModalYop" aria-label="Yopish">×</button>
+    </div>
+    <div class="modal-ich" id="bilimOqishOrama"></div>
+  </div>
+</div>
+
+
+  <!-- Taomlar modali -->
+  <div class="modal-fon" id="modalFon" role="dialog" aria-modal="true" aria-labelledby="modal-sarlavha">
+    <div class="modal">
+      <div class="modal-bosh">
+        <h2 id="modal-sarlavha" data-i18n="mod_h">🍛 Taomlar bazasi</h2>
+        <button class="modal-yop" id="modalYop" aria-label="Yopish">×</button>
+      </div>
+      <div class="modal-ich">
+        <p class="modal-eslatma" data-i18n="mod_esl">Qiymatlar taxminiy (1 XE ≈ 11 g uglevod). Aniqroq nazorat uchun taomni tarozida o'lchang va ro'yxatni shifokoringiz bilan ko'rib chiqing.</p>
+        <div class="turkum-qator" id="turkumQator"></div>
+        <div class="taom-grid" id="taomGrid"></div>
+      </div>
+      <div class="modal-panel" id="modalPanel">
+        <div class="panel-savat-bosh"><span id="savatQisqacha">🧺 Savat bo'sh</span></div>
+        <div class="panel-savat" id="panelSavat"></div>
+        <div class="panel-qator">
+          <div class="kirish-qator">
+            <input type="number" id="modalQand" inputmode="decimal" min="0" step="0.1" placeholder="Qand darajasi">
+            <span class="birlik">mmol/L</span>
+          </div>
+          <button class="panel-hisobla" id="panelHisobla" disabled data-i18n="pan_his">Hisoblash</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profil bo'limi: kirish / ro'yxatdan o'tish / hisob -->
+  <div id="viewProfil" hidden>
+    <section class="karta auth-ich" aria-labelledby="auth-sarlavha">
+      <h2 id="auth-sarlavha" class="sr-only" data-i18n="auth_h">Hisobingiz</h2>
+
+        <div class="auth-header-ico" id="authHeaderIco">
+          <div class="auth-ico-doira"><img src="assets/img/kosa_bosh.webp" alt="" loading="lazy"></div>
+          <h3 class="auth-katta-sarlavha" id="authKattaSarlavha">Xush kelibsiz!</h3>
+          <p class="auth-kichik-matn" id="authKichikMatn">Davom etish uchun hisobingizga kiring</p>
+        </div>
+
+        <!-- Kirish shakli -->
+        <div id="authKirish">
+          <div class="auth-xabar" id="authXabar" hidden></div>
+          <button class="auth-google-tugma" id="googleKirishTugma1" type="button">
+            <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/>
+              <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.81.54-1.85.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/>
+              <path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33z"/>
+              <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
+            </svg>
+            <span data-i18n="auth_google_t">Google bilan davom etish</span>
+          </button>
+          <button class="auth-telegram-tugma" id="telegramKirishTugma1" type="button">
+            <svg width="18" height="18" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="120" cy="120" r="120" fill="#fff"/>
+              <path fill="#29b6f6" d="M98 175c-4 0-3-1.5-4.5-5.5L82 132l89-53"/>
+              <path fill="#29b6f6" d="M98 175c3 0 4.5-1.5 6.5-3.5l18-17.5-22.5-14"/>
+              <path fill="#29b6f6" d="M100.1 140l54.5 40.5c6 3.5 10.5 1.5 12-5.5l22-103.5c2-8.5-3.5-12.5-9.5-9.5L34 108.5c-8 3.5-8 8.5-1.5 10.5l30.5 9.5 70.5-44.5c3.5-2.5 6.5-1 4 1.5"/>
+            </svg>
+            <span data-i18n="auth_telegram_t">Telegram bilan kirish</span>
+          </button>
+          <div class="auth-yoki"><span data-i18n="auth_yoki">yoki</span></div>
+          <div class="maydon">
+            <label for="authEmail" data-i18n="auth_email_l">Email</label>
+            <div class="kirish-qator auth-pill ikon-email"><input type="email" id="authEmail" autocomplete="email" inputmode="email" placeholder="siz@example.com"></div>
+          </div>
+          <div class="maydon">
+            <label for="authParol" data-i18n="auth_parol_l">Parol</label>
+            <div class="kirish-qator auth-pill ikon-parol"><input type="password" id="authParol" autocomplete="current-password"></div>
+          </div>
+          <button class="hisobla auth-asosiy-tugma" id="authKirishTugma" data-i18n="auth_kirish_t">Kirish</button>
+          <div class="auth-pastki-qator">
+            <p class="auth-almashtir"><span data-i18n="auth_royxat_savol">Hisobingiz yo'qmi?</span> <button id="authRoyxatgaOt" data-i18n="auth_royxat_link">Ro'yxatdan o'tish</button></p>
+            <button class="auth-link" id="authParolUnut" data-i18n="auth_unut_t">Parolni unutdingizmi?</button>
+          </div>
+        </div>
+
+        <!-- Ro'yxatdan o'tish shakli -->
+        <div id="authRoyxat" hidden>
+          <div class="auth-xabar" id="authXabar2" hidden></div>
+          <button class="auth-google-tugma" id="googleKirishTugma2" type="button">
+            <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/>
+              <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.81.54-1.85.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/>
+              <path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33z"/>
+              <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
+            </svg>
+            <span data-i18n="auth_google_t">Google bilan davom etish</span>
+          </button>
+          <button class="auth-telegram-tugma" id="telegramKirishTugma2" type="button">
+            <svg width="18" height="18" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="120" cy="120" r="120" fill="#fff"/>
+              <path fill="#29b6f6" d="M98 175c-4 0-3-1.5-4.5-5.5L82 132l89-53"/>
+              <path fill="#29b6f6" d="M98 175c3 0 4.5-1.5 6.5-3.5l18-17.5-22.5-14"/>
+              <path fill="#29b6f6" d="M100.1 140l54.5 40.5c6 3.5 10.5 1.5 12-5.5l22-103.5c2-8.5-3.5-12.5-9.5-9.5L34 108.5c-8 3.5-8 8.5-1.5 10.5l30.5 9.5 70.5-44.5c3.5-2.5 6.5-1 4 1.5"/>
+            </svg>
+            <span data-i18n="auth_telegram_t">Telegram bilan kirish</span>
+          </button>
+          <div class="auth-yoki"><span data-i18n="auth_yoki">yoki</span></div>
+          <div class="maydon">
+            <label for="royIsm" data-i18n="auth_ism_l">Ismingiz</label>
+            <div class="kirish-qator auth-pill ikon-ism"><input type="text" id="royIsm" autocomplete="name"></div>
+          </div>
+          <div class="maydon">
+            <label for="royEmail" data-i18n="auth_email_l">Email</label>
+            <div class="kirish-qator auth-pill ikon-email"><input type="email" id="royEmail" autocomplete="email" inputmode="email" placeholder="siz@example.com"></div>
+          </div>
+          <div class="maydon">
+            <label for="royParol" data-i18n="auth_parol_l">Parol</label>
+            <div class="kirish-qator auth-pill ikon-parol"><input type="password" id="royParol" autocomplete="new-password"></div>
+            <p class="izoh" data-i18n="auth_parol_i">Kamida 6 ta belgi</p>
+          </div>
+          <label class="auth-checkbox">
+            <input type="checkbox" id="royRozilik">
+            <span data-i18n="auth_rozilik_t">Qon qandi ko'rsatkichlari va ovqatlanish yozuvlari kabi sog'ligimga oid ma'lumotlarni ushbu tizimda saqlash va qurilmalar o'rtasida sinxronlash uchun ishlov berilishiga rozilik bildiraman.</span>
+          </label>
+          <button class="hisobla auth-asosiy-tugma" id="authRoyxatTugma" disabled data-i18n="auth_royxat_t">Ro'yxatdan o'tish</button>
+          <p class="auth-almashtir auth-markazlashgan"><span data-i18n="auth_kirish_savol">Hisobingiz bormi?</span> <button id="authKirishgaOt" data-i18n="auth_kirish_link">Kirish</button></p>
+        </div>
+
+        <!-- Google/Telegram orqali birinchi marta kirganlar uchun majburiy rozilik bosqichi -->
+        <div id="authGoogleRozilik" hidden>
+          <p class="auth-google-salom" id="authGoogleSalom"></p>
+          <label class="auth-checkbox">
+            <input type="checkbox" id="googleRozilikBelgisi">
+            <span data-i18n="auth_rozilik_t">Qon qandi ko'rsatkichlari va ovqatlanish yozuvlari kabi sog'ligimga oid ma'lumotlarni ushbu tizimda saqlash va qurilmalar o'rtasida sinxronlash uchun ishlov berilishiga rozilik bildiraman.</span>
+          </label>
+          <button class="hisobla auth-asosiy-tugma" id="googleRozilikTasdiq" disabled data-i18n="auth_davom_t">Davom etish</button>
+          <button class="auth-link" id="googleRozilikRad" data-i18n="auth_bekor_t">Bekor qilish va chiqish</button>
+        </div>
+
+        <!-- Profil (kirilgan holat) -->
+        <div id="authProfil" hidden>
+          <div class="auth-profil-karta">
+            <button class="auth-avatar-tugma" id="authAvatarTugma" type="button" aria-label="Profil rasmini o'zgartirish">
+              <span class="auth-avatar" id="authAvatar">?</span>
+              <span class="auth-avatar-kamera" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </span>
+            </button>
+            <div class="auth-profil-matn">
+              <b id="authIsmKorsat"></b>
+              <span id="authEmailKorsat"></span>
+            </div>
+          </div>
+          <input type="file" id="avatarFayl" accept="image/jpeg,image/png,image/webp" hidden>
+          <div class="auth-xabar" id="avatarXabar" hidden></div>
+          <div class="avatar-amallar" id="avatarAmallar" hidden>
+            <button class="avatar-saqla" id="avatarSaqla" type="button" data-i18n="avatar_saqla_t">Rasmni saqlash</button>
+            <button class="avatar-bekor" id="avatarBekor" type="button" data-i18n="avatar_bekor_t">Bekor qilish</button>
+          </div>
+          <p class="auth-sync-holat" id="authSyncHolat"></p>
+          <button class="auth-chiqish" id="authChiqishTugma" data-i18n="auth_chiqish_t">Hisobdan chiqish</button>
+        </div>
+
+    </section>
+
+    <!-- Telegram kanal kartasi -->
+    <section class="karta tg-karta">
+      <a class="tg-havola" href="https://t.me/dozainsulin_uz" target="_blank" rel="noopener">
+        <span class="tg-ico" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 240 240"><path fill="#fff" d="M100.1 140l54.5 40.5c6 3.5 10.5 1.5 12-5.5l22-103.5c2-8.5-3.5-12.5-9.5-9.5L34 108.5c-8 3.5-8 8.5-1.5 10.5l30.5 9.5 70.5-44.5c3.5-2.5 6.5-1 4 1.5"/></svg>
+        </span>
+        <span class="tg-matn">
+          <b data-i18n="tg_t">Bizning Telegram kanalimiz</b>
+          <span data-i18n="tg_s">Yangiliklar va foydali maslahatlar uchun qo'shiling</span>
+        </span>
+        <span class="tg-oq" aria-hidden="true">›</span>
+      </a>
+    </section>
+  </div>
+
+  <footer>
+    <span data-i18n="foot">Doza — o'quv loyihasi. Tibbiy qaror qabul qilishdan oldin doimo shifokoringizga murojaat qiling.</span>
+    <br><span class="muallif">Designed by Ibrohimov.F</span>
+  </footer>
+
+</div>
+
+<nav class="pastki-nav" id="pastkiNav" aria-label="Asosiy navigatsiya">
+  <span class="pn-pill" id="pnPill" aria-hidden="true"></span>
+  <button class="pn-t faol" data-view="bosh"><img src="assets/img/ikon_bosh.webp" alt=""><span data-i18n="nav_bosh">Bosh</span></button>
+  <button class="pn-t" data-view="kundalik"><img src="assets/img/ikon_kundalik.webp" alt=""><span data-i18n="nav_kundalik">Kundalik</span></button>
+  <button class="pn-t" id="pnTaom"><img src="assets/img/ikon_taomlar.webp" alt=""><span data-i18n="nav_taom">Taomlar</span></button>
+  <button class="pn-t" data-view="bilim"><img src="assets/img/ikon_bilim.webp" alt=""><span data-i18n="nav_bilim">Bilim</span></button>
+  <button class="pn-t" data-view="profil" id="pnProfil"><img src="assets/img/ikon_profil.webp" alt="" id="pnProfilImg"><span data-i18n="nav_profil">Profil</span></button>
+</nav>
+
+<!-- defer: skriptlar renderni to'smaydi; defer tartib saqlaydi, shuning uchun app.js Firebase'dan keyin ishga tushadi -->
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-auth-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-storage-compat.js" defer></script>
+<script src="assets/app.min.js" defer></script>
+
+</body>
+</html>

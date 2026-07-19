@@ -1,0 +1,14 @@
+/index.html
+  Cache-Control: no-cache, must-revalidate
+
+/
+  Cache-Control: no-cache, must-revalidate
+
+/assets/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.css
+  Cache-Control: public, max-age=86400
+
+/assets/*.js
+  Cache-Control: public, max-age=86400

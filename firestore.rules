@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Har bir foydalanuvchi FAQAT o'zining hujjatini o'qishi/yozishi mumkin
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // Kundalik yozuvlari — xuddi shu qoida, faqat egasi kira oladi
+      match /kundalik/{entryId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+  }
+}
